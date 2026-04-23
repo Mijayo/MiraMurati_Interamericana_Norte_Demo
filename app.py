@@ -306,11 +306,11 @@ c4.markdown(kpi("Próximo mes",       f"{PRED[0]} uds",                 "🔮", 
 
 # ── Tabs ──────────────────────────────────────────────────────────────────────
 
-tabs = st.tabs(["📊 Histórico", "🔮 Predicción", "🔄 Validación del Modelo", "🏆 Comparativa ML", "📋 Resumen del Proyecto"])
+tabs = st.tabs(["📋 Resumen del Proyecto", "📊 Histórico", "🔮 Predicción", "🔄 Validación del Modelo", "🏆 Comparativa ML"])
 
-# ══ Tab 1: Histórico ══════════════════════════════════════════════════════════
+# ══ Tab 2: Histórico ══════════════════════════════════════════════════════════
 
-with tabs[0]:
+with tabs[1]:
     st.markdown(sec("Serie Temporal — Ventas Mensuales Tiggo 2", "📊"), unsafe_allow_html=True)
 
     h1, h2, h3 = st.columns(3)
@@ -343,13 +343,13 @@ with tabs[0]:
             Total='sum', Promedio='mean', Máximo='max', Mínimo='min'
         ).round(1)
         st.dataframe(
-            resumen_anual.style.background_gradient(subset=['Total'], cmap='Blues'),
+            resumen_anual.style.bar(subset=['Total'], color='#4a90d9'),
             use_container_width=True
         )
 
-# ══ Tab 2: Predicción ════════════════════════════════════════════════════════
+# ══ Tab 3: Predicción ════════════════════════════════════════════════════════
 
-with tabs[1]:
+with tabs[2]:
     st.markdown(sec("Predicción Enero – Junio 2025", "🔮"), unsafe_allow_html=True)
 
     p1, p2, p3 = st.columns(3)
@@ -388,7 +388,7 @@ with tabs[1]:
     st.subheader("📋 Tabla de predicciones")
     st.dataframe(
         pred[['Mes', 'Predicción', 'IC_Inferior', 'IC_Superior']].style
-            .background_gradient(subset=['Predicción'], cmap='Blues')
+            .bar(subset=['Predicción'], color='#4a90d9')
             .format({'Predicción': '{:.0f}', 'IC_Inferior': '{:.0f}', 'IC_Superior': '{:.0f}'}),
         use_container_width=True, hide_index=True,
     )
@@ -421,9 +421,9 @@ Predicción central + 10% buffer · Equilibrio demanda / inventario
     else:
         st.info(f"Tendencia ESTABLE: {tendencia:+.1f}% vs. promedio histórico de {prom_hist:.1f} uds/mes.")
 
-# ══ Tab 3: Validación ════════════════════════════════════════════════════════
+# ══ Tab 4: Validación ════════════════════════════════════════════════════════
 
-with tabs[2]:
+with tabs[3]:
     st.markdown(sec("Walk-Forward Validation — 2024", "🔄"), unsafe_allow_html=True)
 
     v1, v2, v3, v4 = st.columns(4)
@@ -454,7 +454,7 @@ with tabs[2]:
     wf_show.columns = ['Mes', 'Real', 'Predicción', 'Error Abs.', 'Error %']
     st.dataframe(
         wf_show.style
-               .background_gradient(subset=['Error %'], cmap='RdYlGn_r')
+               .bar(subset=['Error %'], color='#e05c5c')
                .format({'Real': '{:.0f}', 'Predicción': '{:.1f}',
                         'Error Abs.': '{:.2f}', 'Error %': '{:.2f}%'}),
         use_container_width=True, hide_index=True,
@@ -466,9 +466,9 @@ MAPE = {MAPE:.1f}% — Modelo de <strong>alta fiabilidad</strong>. Error medio i
 Apto para planificación de pedidos y compromisos de inventario.
 </div>""", unsafe_allow_html=True)
 
-# ══ Tab 4: Comparativa ML ════════════════════════════════════════════════════
+# ══ Tab 5: Comparativa ML ════════════════════════════════════════════════════
 
-with tabs[3]:
+with tabs[4]:
     st.markdown(sec("Comparativa de 5 Modelos — Mismo Histórico", "🏆"), unsafe_allow_html=True)
 
     st.markdown(f"""<div class="winner-box">
@@ -495,7 +495,7 @@ with tabs[3]:
     st.subheader("📋 Tabla de métricas")
     st.dataframe(
         df_modelos.style
-                  .background_gradient(subset=['MAPE %'], cmap='RdYlGn_r')
+                  .bar(subset=['MAPE %'], color='#e05c5c')
                   .format({'MAPE %': '{:.1f}%', 'MAE': '{:.2f}', 'RMSE': '{:.2f}'})
                   .set_properties(**{'font-family': 'JetBrains Mono, monospace'}),
         use_container_width=True, hide_index=True,
@@ -534,9 +534,9 @@ with tabs[3]:
     ))
     st.plotly_chart(fig_r, use_container_width=True, config={'displayModeBar': False})
 
-# ══ Tab 5: Resumen del Proyecto ═══════════════════════════════════════════════
+# ══ Tab 1: Resumen del Proyecto ═══════════════════════════════════════════════
 
-with tabs[4]:
+with tabs[0]:
     st.markdown(sec("El Problema de Negocio", "🎯"), unsafe_allow_html=True)
     st.markdown("""
 Interamericana Norte necesita **anticipar la demanda mensual del Chery Tiggo 2** para:
