@@ -67,7 +67,11 @@ h2,h3 { font-family:'Rajdhani',sans-serif!important; font-weight:600!important; 
   border-right:1px solid rgba(0,224,255,0.07)!important;
   background-color:var(--c-surface)!important;
 }
-[data-testid="stSidebar"] * { font-family:'Rajdhani',sans-serif!important; }
+[data-testid="stSidebar"] div,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span:not(.material-symbols-rounded):not(.material-icons),
+[data-testid="stSidebar"] label { font-family:'Rajdhani',sans-serif!important; }
+[data-testid="stSidebarCollapseButton"] { display:none!important; }
 [data-testid="stDataFrame"] { font-family:'JetBrains Mono',monospace!important; font-size:.8rem!important; }
 code,pre { font-family:'JetBrains Mono',monospace!important; }
 
